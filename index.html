@@ -88,9 +88,15 @@ h1,h2,p{margin:0}
 #black{position:fixed;inset:0;background:#000;z-index:50}
 
 /* ---------- controls ---------- */
-#gear{position:fixed;z-index:40;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));
-  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;opacity:.22;transition:opacity .2s;display:grid;place-items:center;padding:0}
-#gear:hover,#gear:focus-visible{opacity:1}
+#hot{position:fixed;z-index:40;left:0;bottom:0;width:72px;height:72px;background:transparent}
+#login{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:rgba(0,0,0,.74);padding:16px}
+#lf{background:#0b1812;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:22px;width:min(360px,100%);display:flex;flex-direction:column;gap:12px;-webkit-user-select:text;user-select:text}
+#lf h2{font-size:1.3rem;font-weight:800}
+#lf input{background:#12251b;border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:10px;padding:.6em .8em;font:inherit;direction:ltr;text-align:center}
+#lf .rowb{display:flex;gap:8px}
+#lf button{flex:1;background:#173a28;border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:10px;padding:.55em .9em;font:inherit;cursor:pointer}
+#lf button:hover{background:#1d4a33}
+#lerr{color:#ff9a90;min-height:1.4em;font-size:.95rem}
 #simtag{position:fixed;z-index:41;top:max(8px,env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:#b3261e;color:#fff;border-radius:999px;padding:.1em 1em;font-size:.95rem;font-weight:700}
 #scrim{position:fixed;inset:0;z-index:59;background:rgba(0,0,0,.55)}
 #panel{position:fixed;z-index:60;top:0;bottom:0;left:0;width:min(460px,100%);background:#0b1812;border-right:1px solid rgba(255,255,255,.12);overflow:auto;
@@ -104,7 +110,7 @@ h1,h2,p{margin:0}
 #panel input[type=text]{width:12rem;direction:rtl}
 #panel button,.btn{background:#173a28;border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:10px;padding:.5em .9em;font:inherit;cursor:pointer}
 #panel button:hover{background:#1d4a33}
-#panel input:focus-visible,#panel button:focus-visible,#gear:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#panel input:focus-visible,#panel button:focus-visible,#lf input:focus-visible,#lf button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:.4em}
 .note{color:var(--mute);font-size:.9rem;line-height:1.6;margin-top:.4em}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
@@ -176,10 +182,17 @@ td:first-child,th:first-child{text-align:right}
 <div id="black" hidden></div>
 <div id="simtag" hidden>وضع التجربة: الوقت غير حقيقي</div>
 
-<button id="gear" type="button" aria-label="الإعدادات">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
-</button>
 
+<div id="hot" aria-hidden="true"></div>
+<div id="login" hidden>
+  <form id="lf" dir="rtl" lang="ar" autocomplete="off">
+    <h2>دخول المشرف</h2>
+    <label for="lp">كلمة المرور</label>
+    <input type="password" id="lp" autocomplete="current-password">
+    <div id="lerr" role="alert"></div>
+    <div class="rowb"><button type="submit">دخول</button><button type="button" id="lcancel">إلغاء</button></div>
+  </form>
+</div>
 <div id="scrim" hidden></div>
 <aside id="panel" dir="rtl" lang="ar" hidden aria-label="الإعدادات">
   <div class="row"><h2>الإعدادات</h2><button type="button" id="p-close">إغلاق</button></div>
@@ -229,7 +242,7 @@ td:first-child,th:first-child{text-align:right}
   </div>
   <h3>العرض</h3>
   <div class="btns"><button type="button" id="p-full">ملء الشاشة</button><button type="button" id="p-reset">استعادة الإعدادات الأصلية</button></div>
-  <p class="note">الإعدادات تُحفظ على هذا الجهاز فقط. اضغط S لفتح الإعدادات وF لملء الشاشة.</p>
+  <p class="note">الإعدادات تُحفظ على هذا الجهاز فقط. اضغط F لملء الشاشة.</p>
 </aside>
 
 <script>
@@ -463,9 +476,44 @@ applyBg();
 
 /* ---------- settings panel ---------- */
 var panel=$('panel'),scrim=$('scrim');
-function openPanel(){renderTable();panel.hidden=false;scrim.hidden=false;}
-function closePanel(){panel.hidden=true;scrim.hidden=true;}
-$('gear').addEventListener('click',openPanel);
+var ADMIN_HASH='d427e8c1ca441ef901bf0b8c21a66ae0b090fdf64cd97921a70820f47fc284c4';
+var adminOK=false;
+function openPanel(){if(!adminOK) return;renderTable();panel.hidden=false;scrim.hidden=false;}
+function closePanel(){panel.hidden=true;scrim.hidden=true;adminOK=false;}
+var loginEl=$('login'),lp=$('lp'),lerr=$('lerr');
+function sha256hex(s){
+  if(!(window.crypto&&crypto.subtle)) return Promise.reject(new Error('nocrypto'));
+  return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){
+    return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+  });
+}
+function closeLogin(){loginEl.hidden=true;lp.value='';lerr.textContent='';}
+function askLogin(){
+  if(adminOK){openPanel();return;}
+  lerr.textContent='';lp.value='';loginEl.hidden=false;
+  setTimeout(function(){lp.focus();},50);
+}
+$('lf').addEventListener('submit',function(e){
+  e.preventDefault();
+  sha256hex(lp.value).then(function(hx){
+    if(hx===ADMIN_HASH){adminOK=true;closeLogin();openPanel();}
+    else{lerr.textContent='كلمة المرور غير صحيحة';lp.value='';}
+  }).catch(function(){lerr.textContent='المتصفح لا يدعم التحقق. افتح الموقع عبر رابط https.';});
+});
+$('lcancel').addEventListener('click',closeLogin);
+/* admin entry: open the site with #admin at the end of the address, or click 5 times in the bottom-left corner */
+function checkHash(){
+  if(location.hash==='#admin'){
+    try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+    askLogin();
+  }
+}
+window.addEventListener('hashchange',checkHash);
+var taps=[];
+$('hot').addEventListener('click',function(){
+  var t=Date.now();taps=taps.filter(function(x){return t-x<4000;});taps.push(t);
+  if(taps.length>=5){taps=[];askLogin();}
+});
 $('p-close').addEventListener('click',closePanel);
 scrim.addEventListener('click',closePanel);
 function renderTable(){
@@ -533,9 +581,8 @@ $('p-reset').addEventListener('click',function(){
 });
 document.addEventListener('keydown',function(e){
   if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName)) return;
-  if(e.key==='s'||e.key==='S'){panel.hidden?openPanel():closePanel();}
   if(e.key==='f'||e.key==='F'){goFull();}
-  if(e.key==='Escape'){closePanel();}
+  if(e.key==='Escape'){closePanel();closeLogin();}
 });
 
 /* keep the screen awake while the page is visible */
@@ -543,5 +590,6 @@ function wake(){try{if(navigator.wakeLock&&document.visibilityState==='visible')
 document.addEventListener('visibilitychange',wake);
 document.addEventListener('click',wake,{once:true});
 wake();
+checkHash();
 })();
 </script>
